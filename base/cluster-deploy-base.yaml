@@ -2,7 +2,6 @@ apiVersion: hive.openshift.io/v1
 kind: ClusterDeployment
 metadata:
   name: base-cluster
-  namespace: dev
 spec:
   baseDomain: zmlabs.com.br
   clusterName: base-cluster
@@ -15,7 +14,7 @@ spec:
       defaultDatastore: /Home/datastore/NVMe-2
       network: 'DPG-Geral'
       cluster: /Home/host/LAB
-      # Referências obrigatórias para o Hive
+      # Estes campos são os que aparecem como "Required" no seu erro:
       certificatesSecretRef:
         name: dev-vsphere-certs
       credentialsSecretRef:
