@@ -15,10 +15,8 @@ namespace: dev
 # Forma moderna de fazer o patch (substitui o patchesJson6902)
 patches:
   - target:
-      group: hive.openshift.io
-      version: v1
       kind: ClusterDeployment
-      name: dev # Nome que está no cluster-deploy-base.yaml
+      name: base-cluster # Nome que está no cluster-deploy-base.yaml
     patch: |-
       - op: replace
         path: /spec/clusterName
