@@ -3,6 +3,21 @@ kind: ClusterDeployment
 metadata:
   name: base-cluster
 spec:
-  installAttemptsLimit: 1
+  baseDomain: zmlabs.com.br
+  clusterName: base-cluster
   installed: false
-  # Outros campos comuns podem ficar aqui
+  installAttemptsLimit: 1
+  platform:
+    vsphere:
+      vCenter: vcenter.zmlabs.com.br
+      datacenter: Home
+      defaultDatastore: /Home/datastore/NVMe-2
+      network: 'DPG-Geral'
+      cluster: /Home/host/LAB
+  provisioning:
+    installConfigSecretRef:
+      name: dev-install-config
+    imageSetRef:
+      name: img4.20.15-multi-appsub
+  pullSecretRef:
+    name: dev-pull-secret

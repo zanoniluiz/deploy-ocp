@@ -1,4 +1,3 @@
-# deploy-ocp/clusters/dev/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -6,18 +5,17 @@ resources:
   - ../../base
   - secrets/install-config-sealed.yaml
   - secrets/vsphere-creds-sealed.yaml
-  # Adicione aqui os manifestos específicos que não estão na base:
-  #  - managed-cluster.yaml
-  #  - machine-pool.yaml
 
 namespace: dev
 
-# Forma moderna de fazer o patch (substitui o patchesJson6902)
 patches:
   - target:
       kind: ClusterDeployment
-      name: base-cluster # Nome que está no cluster-deploy-base.yaml
+      name: base-cluster
     patch: |-
+      - op: replace
+        path: /metadata/name
+        value: dev
       - op: replace
         path: /spec/clusterName
         value: dev
