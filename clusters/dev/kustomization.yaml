@@ -1,0 +1,24 @@
+resources:
+  - ../../base
+  - cluster-deployment.yaml
+  - machine-pool.yaml
+  - managed-cluster.yaml
+  - secrets/vsphere-creds-sealed.yaml
+  - secrets/install-config-sealed.yaml
+
+namespace: dev
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+# Aqui fazemos o merge das configurações específicas no base
+patchesJSON6902:
+  - target:
+      group: hive.openshift.io
+      version: v1
+      kind: ClusterDeployment
+      name: base-cluster
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: dev
