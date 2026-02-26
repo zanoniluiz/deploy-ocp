@@ -1,24 +1,25 @@
+# deploy-ocp/clusters/dev/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
   - ../../base
-  - cluster-deployment.yaml
-  - machine-pool.yaml
-  - managed-cluster.yaml
-  - secrets/vsphere-creds-sealed.yaml
   - secrets/install-config-sealed.yaml
+  - secrets/vsphere-creds-sealed.yaml
+  # Adicione aqui os manifestos específicos que não estão na base:
+  #  - managed-cluster.yaml
+  #  - machine-pool.yaml
 
 namespace: dev
 
-generatorOptions:
-  disableNameSuffixHash: true
-
-# Aqui fazemos o merge das configurações específicas no base
-patchesJSON6902:
+# Forma moderna de fazer o patch (substitui o patchesJson6902)
+patches:
   - target:
       group: hive.openshift.io
       version: v1
       kind: ClusterDeployment
-      name: base-cluster
+      name: dev # Nome que está no cluster-deploy-base.yaml
     patch: |-
       - op: replace
-        path: /metadata/name
+        path: /spec/clusterName
         value: dev
